@@ -1,1 +1,410 @@
-123
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据管理中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36D399',
+                        neutral: '#F3F4F6',
+                        'neutral-dark': '#1F2937'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-shadow {
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <i class="fa fa-database text-primary text-2xl mr-2"></i>
+                        <span class="text-xl font-semibold text-primary">数据管理中心</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="flex items-center space-x-4">
+                        <a href="#" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            <i class="fa fa-home mr-1"></i>首页
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            <i class="fa fa-book mr-1"></i>文档
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            <i class="fa fa-question-circle mr-1"></i>帮助
+                        </a>
+                        <a href="#" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                            <i class="fa fa-user-circle mr-1"></i>登录
+                        </a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-700 hover:text-primary" id="mobile-menu-button">
+                        <i class="fa fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-md rounded-b-lg">
+                <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
+                    <i class="fa fa-home mr-1"></i>首页
+                </a>
+                <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
+                    <i class="fa fa-book mr-1"></i>文档
+                </a>
+                <a href="#" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200">
+                    <i class="fa fa-question-circle mr-1"></i>帮助
+                </a>
+                <a href="#" class="bg-primary hover:bg-primary/90 text-white block px-4 py-2 rounded-md text-base font-medium transition-colors duration-200 text-center">
+                    <i class="fa fa-user-circle mr-1"></i>登录
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 欢迎区域 -->
+        <section class="mb-12 text-center">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-gray-900 mb-4">数据管理中心</h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 max-w-3xl mx-auto">
+                管理您的所有数据资源，轻松访问各类数据库。本系统支持多种数据类型，帮助您高效组织和利用信息。
+            </p>
+            <div class="mt-8 flex flex-wrap justify-center gap-4">
+                <a href="#databases" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg text-lg font-medium transition-all duration-300 shadow-lg hover:shadow-primary/30">
+                    <i class="fa fa-database mr-2"></i>浏览数据库
+                </a>
+                <a href="#" class="bg-white hover:bg-gray-50 text-primary border border-primary px-6 py-3 rounded-lg text-lg font-medium transition-all duration-300">
+                    <i class="fa fa-plus-circle mr-2"></i>创建新数据库
+                </a>
+            </div>
+        </section>
+
+        <!-- 统计卡片 -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-xl p-6 card-shadow card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">总数据库数</h3>
+                    <span class="bg-blue-100 text-primary p-2 rounded-full">
+                        <i class="fa fa-database"></i>
+                    </span>
+                </div>
+                <p class="text-3xl font-bold text-gray-900">0</p>
+                <p class="text-sm text-gray-500 mt-2">暂无已创建的数据库</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 card-shadow card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">活跃连接</h3>
+                    <span class="bg-green-100 text-secondary p-2 rounded-full">
+                        <i class="fa fa-link"></i>
+                    </span>
+                </div>
+                <p class="text-3xl font-bold text-gray-900">0</p>
+                <p class="text-sm text-gray-500 mt-2">暂无活跃连接</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 card-shadow card-hover">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-700">数据总量</h3>
+                    <span class="bg-purple-100 text-purple-600 p-2 rounded-full">
+                        <i class="fa fa-database"></i>
+                    </span>
+                </div>
+                <p class="text-3xl font-bold text-gray-900">0 MB</p>
+                <p class="text-sm text-gray-500 mt-2">暂无数据</p>
+            </div>
+        </section>
+
+        <!-- 数据库类型区域 -->
+        <section id="databases" class="mb-16">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">数据库分类</h2>
+                <div class="relative">
+                    <input type="text" placeholder="搜索数据库..." class="pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 w-full sm:w-64">
+                    <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- 数据库卡片网格 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 人员信息数据库卡片 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow card-hover">
+                    <div class="h-48 bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center">
+                        <i class="fa fa-users text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">人员信息数据库</h3>
+                        <p class="text-gray-600 mb-4">存储和管理各类人员的基本信息、联系方式和相关资料。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">
+                                <i class="fa fa-folder-o mr-1"></i>0 个数据表
+                            </span>
+                            <a href="#" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200">
+                                访问 <i class="fa fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 地点信息数据库卡片 -->
+                <div class="bg-white rounded-xl overflow-hidden card-shadow card-hover">
+                    <div class="h-48 bg-gradient-to-r from-green-500 to-teal-600 flex items-center justify-center">
+                        <i class="fa fa-map-marker text-white text-6xl"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">地点信息数据库</h3>
+                        <p class="text-gray-600 mb-4">记录和管理各类地理位置信息、场所详情和相关属性。</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">
+                                <i class="fa fa-folder-o mr-1"></i>0 个数据表
+                            </span>
+                            <a href="#" class="text-primary hover:text-primary/80 font-medium transition-colors duration-200">
+                                访问 <i class="fa fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 空白卡片用于占位 -->
+                <div class="bg-white rounded-xl overflow-hidden border-2 border-dashed border-gray-300 flex flex-col items-center justify-center h-full p-6 card-hover cursor-pointer" id="add-database-card">
+                    <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                        <i class="fa fa-plus text-gray-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-500">添加新数据库</h3>
+                    <p class="text-sm text-gray-400 mt-2 text-center">点击创建新的数据库分类</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 最近活动区域 -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">最近活动</h2>
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <div class="flex flex-col space-y-4">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-blue-100 p-2 rounded-full">
+                            <i class="fa fa-database text-primary"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-800">系统初始化完成</p>
+                            <p class="text-sm text-gray-500">刚刚</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 bg-gray-100 p-2 rounded-full">
+                            <i class="fa fa-clock-o text-gray-500"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-gray-500">暂无更多活动记录</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">数据管理中心</h3>
+                    <p class="text-gray-400 mb-4">
+                        一个高效、便捷的数据管理系统，帮助您组织和利用各类数据资源。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <i class="fa fa-linkedin text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">首页</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">文档</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">帮助中心</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">资源</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">API 文档</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">开发指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">常见问题</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">社区支持</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">联系我们</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fa fa-envelope-o mr-2 text-gray-400"></i>
+                            <a href="mailto:support@example.com" class="text-gray-400 hover:text-white transition-colors duration-200">support@example.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-phone mr-2 text-gray-400"></i>
+                            <span class="text-gray-400">+86 123 4567 8910</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-map-marker mr-2 text-gray-400"></i>
+                            <span class="text-gray-400">北京市海淀区科技园区</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 数据管理中心. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 模态框 -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="modal">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900">创建新数据库</h3>
+                <button class="text-gray-400 hover:text-gray-600" id="close-modal">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <form>
+                <div class="mb-4">
+                    <label for="database-name" class="block text-sm font-medium text-gray-700 mb-1">数据库名称</label>
+                    <input type="text" id="database-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200" placeholder="输入数据库名称">
+                </div>
+                <div class="mb-4">
+                    <label for="database-type" class="block text-sm font-medium text-gray-700 mb-1">数据库类型</label>
+                    <select id="database-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200">
+                        <option value="">选择数据库类型</option>
+                        <option value="personnel">人员信息</option>
+                        <option value="location">地点信息</option>
+                        <option value="custom">自定义类型</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="database-description" class="block text-sm font-medium text-gray-700 mb-1">描述</label>
+                    <textarea id="database-description" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200" placeholder="简要描述这个数据库的用途"></textarea>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancel-modal" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-200">取消</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200">创建</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                navbar.classList.add('shadow-md', 'bg-white/95', 'backdrop-blur-sm');
+                navbar.classList.remove('shadow-sm');
+            } else {
+                navbar.classList.remove('shadow-md', 'bg-white/95', 'backdrop-blur-sm');
+                navbar.classList.add('shadow-sm');
+            }
+        });
+
+        // 模态框控制
+        const modal = document.getElementById('modal');
+        const modalContent = document.getElementById('modal-content');
+        const addDatabaseCard = document.getElementById('add-database-card');
+        const closeModal = document.getElementById('close-modal');
+        const cancelModal = document.getElementById('cancel-modal');
+        
+        function openModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+        
+        function closeModalFunc() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+        
+        addDatabaseCard.addEventListener('click', openModal);
+        closeModal.addEventListener('click', closeModalFunc);
+        cancelModal.addEventListener('click', closeModalFunc);
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModalFunc();
+            }
+        });
+        
+        // 防止模态框内部点击传播到外部
+        modalContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // 表单提交处理
+        const modalForm = modal.querySelector('form');
+        
+        modalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // 这里添加表单提交逻辑
+            alert('数据库创建成功！（模拟提交）');
+            closeModalFunc();
+            // 清空表单
+            modalForm.reset();
+        });
+    </script>
+</body>
+</html>
+    
